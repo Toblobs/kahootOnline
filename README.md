@@ -3,6 +3,11 @@ A scuffed remake of Kahoot...
 
 =============================
 
+Collaborators
+-------------
+Daniel Eldridge, SHSB
+Adian Liang, SHSB
+
 Notes
 -----
 
