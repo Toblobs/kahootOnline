@@ -21,7 +21,8 @@ SERVER
 
 - v1.0.1: Server and class structure implemented.
 - v1.0.2: Small fixes and changes. Inheritance added, with 3 question types.
-- v1.0.3:
+- v1.0.3: First addition of #signal data (broken so it's hashed out)
+- 
 
 CLIENT
 ------
@@ -32,6 +33,7 @@ TESTS
 -----
 
 - v1.0.1 [GUI]: Started pygame production.
+- v1.0.2 [GUI]: A window and the screen class are init.
 -----
 
 
