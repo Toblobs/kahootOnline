@@ -28,7 +28,13 @@ CLIENT
 
 - v1.0.1: Nothing. Yep.
 
+TESTS
 -----
+
+- v1.0.1 [GUI]: Started pygame production.
+-----
+
+
 
 Notes
 =====
