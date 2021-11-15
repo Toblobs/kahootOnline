@@ -15,3 +15,4 @@ Notes
 -----
 
 - Create a backup soon...
+- Other stuff like generic file notes
