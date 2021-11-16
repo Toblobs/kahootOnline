@@ -23,7 +23,7 @@ SERVER
 - v1.0.1: Server and class structure implemented.
 - v1.0.2: Small fixes and changes. Inheritance added, with 3 question types.
 - v1.0.3: First addition of #signal data (broken so it's hashed out)
-- 
+- v1.0.4: Changed signal, soon handle connection etc.
 
 CLIENT
 ------
