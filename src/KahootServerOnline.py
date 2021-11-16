@@ -1,10 +1,12 @@
 ### Hosted on Github at @Toblobs
 ### A Synergy Studios Project
 
-version = '1.0.3'
+version = '1.0.4'
 
-from netlib import Server, Client, Packet
+from netlib import Server, Signal
 from netlib.net.server.connection import Connection
+from uuid import uuid4
+
 
 #==============================================================#
 
@@ -18,11 +20,13 @@ class Question:
         self.question = question
         self.correct = correct
 
+        self.uuid = uuid4()
+
     def check_correct(self, resp):
 
         pass
 
-        ### Example of (abstract?) class method
+        ### Example of (abstract?)
     
 
 class SimpleAnswerQuestion(Question):
@@ -60,15 +64,19 @@ class MultipleAnswerQuestion(Question):
         super().check_correct(resp)
 
         
-            
-
+    
 class TrueOrFalseQuestion(Question):
     """This question is always true or false.
        Inherits from class <Question>"""
 
-    pass
+    def __init__(self, question, correct, answers):
 
-#==============================================================#
+        super().__init__(question, correct)
+
+    def check_correct(self, resp):
+
+        super().check_correct(resp)
+
 
 class QuestionMaker:
     """Class which makes questions. It then returns all the questions made
@@ -76,41 +84,8 @@ class QuestionMaker:
 
     pass
 
-class MetaServer:
-    """Original Signal Server"""
+#==============================================================#
 
-    PORT = 7777
-
-    def setup_server(h: Server):
-        usernames = {}
-
-        @h.OnConnect
-        def handle_connection(conn: Connection):
-
-            @conn.OnSignalOfType("set-username")
-            def set_username(packet: Packet):
-                username = packet.body["username"]
-                usernames[conn.UUID] = username
-
-            @conn.OnSignalOfType("send-message")
-            def handle_messages(packet: Packet):
-                content = packet.body["content"]
-                username = usernames[conn.UUID]
-
-                message = Packet({
-                    "content": content,
-                    "username": username
-                }, request_type="message")
-
-                h.send_to_all_except(message, conn)
-
-            @conn.OnDisconnect
-            def handle_disconnect():
-                username = usernames[conn.UUID]
-
-                h.send_to_all_except(Packet({
-                    "username": username
-                }, request_type="disconnect-message"))
 
 class KahootServer:
     """The server, which creates Question objects and
@@ -119,10 +94,35 @@ class KahootServer:
     def __init__(self):
 
         self.QuestionMaker = QuestionMaker()
-        #self.meta = MetaServer()
+
+        self.ip = Server.get_host_machine()
+        self.port = 9999
+        
+        self._server = Server(self.ip, self.port)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *_):
+        self._server.exit()
     
+    def run(self):
+        self._server.run()
+
+    def stop(self):
+        self._server.exit()
 
 
-def test_drive_method():
-    pass
-test_drive_method()
+correct = 'B'
+
+with KahootServer() as ks:
+    
+    @ks._server.OnConnection
+    def handle_connection(conn):
+        
+        @conn.OnSignal("is_answer_correct")
+        def is_correct(signal):
+            correct = (signal.payload.answer == correct_answer): #Make correct
+
+             conn.send(Signal({"correct": correct, "id": question_id}, "answer_status")) 
+
