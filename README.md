@@ -10,6 +10,7 @@ Collaborators
 - Tobiloba Kujore (creator) - joined 09/11
 - Daniel Eldridge (questions) - joined 09/11
 - Sam Booker (#signal sockets) [@suchasaltylemon] - joined 09/11
+- Jack Learmouth (questions) - joined 16/11
 
 ---------------
 
