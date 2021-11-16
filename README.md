@@ -23,12 +23,13 @@ SERVER
 - v1.0.1: Server and class structure implemented.
 - v1.0.2: Small fixes and changes. Inheritance added, with 3 question types.
 - v1.0.3: First addition of #signal data (broken so it's hashed out)
-- v1.0.4: Changed signal, soon handle connection etc.
+- v1.0.4: Fixed #signal, added functionality for checking questions, UUID for questions etc.
 
 CLIENT
 ------
 
 - v1.0.1: Nothing. Yep.
+- v1.0.2: Added #signal to the client.
 
 TESTS
 -----
@@ -42,5 +43,6 @@ TESTS
 Notes
 =====
 
-- GUI for client side set to be added in v1.1 (tkinter pending)
-- Add features when making a server (customisable)
+- [GUI] Client side set to be added in v1.1 (tkinter pending)
+- [SERVER] Add features when making a server (customisable)
+- [SERVER] Add types for messages when server and client communicate
