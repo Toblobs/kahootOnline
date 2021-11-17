@@ -35,15 +35,15 @@ class KahootServer:
         self._server.exit()
 
 
-correct = 'B'
+#correct = 'B'
 
-with KahootServer() as ks:
+#with KahootServer() as ks:
     
-    @ks._server.OnConnection
-    def handle_connection(conn):
+    #@ks._server.OnConnection
+    #def handle_connection(conn):
         
-        @conn.OnSignal("is_answer_correct")
-        def is_correct(signal):
-            correct = (signal.payload.answer == correct_answer) #Make correct
+        #@conn.OnSignal("is_answer_correct")
+        #def is_correct(signal):
+            #correct = (signal.payload.answer == correct_answer) #Make correct
 
-            conn.send(Signal({"correct": correct, "id": question_id}, "answer_status")) 
+            #conn.send(Signal({"correct": correct, "id": question_id}, "answer_status")) 
