@@ -16,6 +16,7 @@ Collaborators
 - Daniel Eldridge (questions) - joined 09/11
 - Sam Booker (#signal sockets) [@suchasaltylemon] - joined 09/11
 - Jack Learmouth (questions) - joined 16/11
+- Jaden Francisco (GUI design/creation) - joined 22/11
 
 ---------------
 
