@@ -1,7 +1,7 @@
 ### Hosted on Github at @Toblobs
 ### A Synergy Studios Project
 
-version = '1.0.5'
+version = '1.0.6'
 
 from netlib import Server, Signal
 from netlib.net.server.connection import Connection
@@ -9,40 +9,59 @@ from uuid import uuid4
 
 from kModules.kQuestions import *
 
+
+class GameRunner:
+    """Runs a Kahoot Game."""
+
+    def __init__(self):
+        pass
+
 class KahootServer:
     """The server, which creates Question objects and
        broadcasts info to clients. Uses #signal."""
 
     def __init__(self):
 
-        self.QuestionMaker = QuestionMaker()
-
         self.ip = Server.get_host_machine()
-        self.port = 9999
+        self.port = 4747
         
         self._server = Server(self.ip, self.port)
 
-    def __enter__(self):
-        return self
+        self.client_uuid = None
 
-    def __exit__(self, *_):
-        self._server.exit()
-    
+    def setup_server(self, s: Server):
+
+        self.client_uuid = {}
+
+        @self._server.OnConnection
+        def handle_conn(conn: Connection):
+
+            print(f"[+] Client {conn} connected to the server")
+            print(f"[*] Connections: {self.connections()}")
+            
+            @conn.OnSignal("/message")
+            def handle_message(signal: Signal):
+                print(f"[>] Client {conn} sent message: {signal.payload.content}")
+            
+            @conn.OnSignal("/uuid/set")
+            def set_uuid(signal: Signal):
+
+                self.client_uuid[conn] = signal.payload.uuid
+                print(f"[+] Client {conn} set as conn-UUID: {signal.payload.uuid}")
+                
+        @self._server.OnDisconnection
+        print(f"[!] Client disconnected from server")
+        print(f"[*] Connections: {self.connections()}")
+                  
     def run(self):
+
+        print(f"[*] Started as {self.ip}:{self.port}")
+
+        self.setup_server(self._server)
         self._server.run()
 
-    def stop(self):
-        self._server.exit()
+#-------------------------------------------------------------------#
         
-#correct = 'B'
+kServer = KahootServer()
 
-#with KahootServer() as ks:
-    
-    #@ks._server.OnConnection
-    #def handle_connection(conn):
-        
-        #@conn.OnSignal("is_answer_correct")
-        #def is_correct(signal):
-            #correct = (signal.payload.answer == correct_answer) #Make correct
-
-            #conn.send(Signal({"correct": correct, "id": question_id}, "answer_status")) 
+kServer.run()
