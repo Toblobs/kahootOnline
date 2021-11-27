@@ -1,28 +1,53 @@
 # kahootOnline
-A scuffed remake of Kahoot...
-Made by Y9 and Y10 SHSB
+A scuffed remake of Kahoot, by SHSB
 
 ------------------------------
 
 About the Project
 =================
 
-This is a remake of Kahoot.
+This project is a remake of Kahoot in the popular programming language Python.
+The collaborators are from Y9 and Y10 of SHSB. It was started on September 9th, 2021.
+The project aims to be released in early - mid 2022.
+
 
 Collaborators
 =============
 
-- Tobiloba Kujore (creator) - joined 09/11
+Coders
+------
+
+- Tobiloba Kujore (main coder) - joined 09/11
+- Sam Booker (#signal dir coder) [@suchasaltylemon] - joined 09/11
+
+Question Makers
+---------------
+
 - Daniel Eldridge (questions) - joined 09/11
-- Sam Booker (#signal sockets) [@suchasaltylemon] - joined 09/11
 - Jack Learmouth (questions) - joined 16/11
-- Jaden Francisco (GUI design/creation) - joined 22/11
+
+GUI Artists
+-----------
+
+- Jaden Francisco (GUI templates) - joined 22/11
 
 ---------------
 
-Implementation
-==============
+Imports and Packages
+====================
 
+Imports
+-------
+
+Currently, the project uses only a few Python libraries.
+The ones listed are (as of 27/11)
+
+- socket
+- tkinter
+- time
+
+Packages
+--------
 Nothing yet.
 
 Notes
