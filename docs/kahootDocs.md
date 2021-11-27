@@ -12,30 +12,39 @@ SERVER
 - v1.0.3: First addition of #signal data (broken so it's hashed out)
 - v1.0.4: Fixed #signal, added functionality for checking questions, UUID for questions etc.
 - v1.0.5: Moved question code to kModules/kQuestions
+- v1.0.6: Sedning data with #signal and client UUIDs added.
 
 CLIENT
 ------
 
 - v1.0.1: Nothing. Yep.
 - v1.0.2: Added #signal to the client.
+- v1.0.3: UUID and #signal connection added.
 
 MODULES
 -------
 
 - v1.0.1 [kQuestions] Code from kahootServer.py moved to this file.
 
+GUI
+---
+
+- v1.0.1: Started pygame production.
+- v1.0.2: Changed to tkinter. Added wrapper classes for objects
+
 TESTS
 -----
 
-- v1.0.1 [GUI]: Started pygame production.
-- v1.0.2 [GUI]: A window and the screen class are init.
------
+- Empty for now.
 
+-----
 
 Other Docs
 ==========
 
+- Website coming soon!
+
 Implementation
 --------------
 
-To be written soon.
+- Should be packaged as an executable (research pending)
