@@ -1,73 +1,46 @@
 #Hosted on Github at @Toblobs
 #A Synergy Studios Project
 
-#Tut: https://coderslegacy.com/python/python-pygame-tutorial/
-
-import pygame
-from pygame.locals import *
-
 version = '1.0.2'
+sound_safe = True
+
+import tkinter as tk
+from kahootGUISupport import *
+
+if sound_safe == True:
+    from playsound import playsound #Song by Vylet Pony: KAHOOT IT
 
 
-def check_event():
-    """Checks for an event in the pygame library."""
-    
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            pygame.quit()
-            sys.exit()
+PURPLE = '#46178F'
+WHITE = '#FFFFFF'
+BLACK = '#000000'
 
-def main():
-    """"Main running scripts."""
+HELVETICA_16 = ("Helvetica", 16)
 
-    ### SETUP
-    pygame.init()
+all_widgets = []
 
-    FPS = 30
-    FramePerSec = pygame.tick.Clock()
+root = tk.Tk()
 
-    DISPLAY = pygame.display.set_mode((300,300))
+#---------------------------------------------------------------------------------#
 
-    BLUE  = (0, 0, 255)
-    RED   = (255, 0, 0)
-    GREEN = (0, 255, 0)
-    BLACK = (0, 0, 0)
-    WHITE = (255, 255, 255)
+main_screen = kScreen()
 
-    colours = (BLUE, RED, GREEN, BLACK , WHITE)
+canvas = kCanvas(root, 500, 800, None)
+main_frame = kFrame(root, PURPLE, [0, 0, 1, 1], main_screen)
 
-    DISPLAY.fill(WHITE)
-    pygame.display.set_caption("Example")
+text_label = kLabel(root, WHITE, [0.4, 0.4, 0.1, 0.1], 'label',
+                    HELVETICA_16, main_screen)
 
+logo_photo = tk.PhotoImage(file = 'kahootLogo.png')
+image_label = kImage(root, [0.42, 0.1, 0.13, 0.2], logo_photo, main_screen)
 
+canvas.show()
+main_frame.show()
 
-    ### CLASSES
+text_label.show()
+image_label.show()
 
-    
-    class Window():
-        """A window which holds the shapes and widgets. You
-           can hide and show all the aspects of a window."""
+root.mainloop()
 
-        def __init__(self):
-            pass
-
-        def hide(self):
-            pass
-
-        def show(self):
-            pass
-
-    
-
-    
-    #---------------------------------------#
-    
-
-    while True:
-        check_events()
-
-        FramePerSec.tick(FPS)
-
-
-if __name__ == "__main__":
-    main()
+#if sound_safe == True:
+    #playsound('kahootTheme.mp3') #Song by Vylet Pony: KAHOOT IT
