@@ -26,10 +26,10 @@ Question Makers
 - Daniel Eldridge (questions) - joined 09/11
 - Jack Learmouth (questions) - joined 16/11
 
-GUI Artists
------------
+GUI Design and Music
+--------------------
 
-- Jaden Francisco (GUI templates) - joined 22/11
+- Jaden Francisco (GUI artist, music) - joined 22/11
 
 ---------------
 
@@ -56,3 +56,4 @@ Notes
 - [GUI] Client side set to be added in v1.1 (tkinter pending)
 - [SERVER] Add features when making a server (customisable)
 - [SERVER] Add types for messages when server and client communicate
+- [MUSIC] Kahoot OST pending (by Jaden Francisco)
