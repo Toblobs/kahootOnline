@@ -1,19 +1,19 @@
 ### Hosted on Github at @Toblobs
 ### A Synergy Studios Project
 
-version = '1.0.4_T.0.1'
+version = '1.0.4_T.0.2'
 
 from threading import Thread
-import socket 
+import socket
 
-class GameClient:
+class SocketClient:
     """The client, which accepts questions and
        answers them by sending back socket data."""
 
 
     def __init__(self):
 
-        self.SERVER_HOST = '127.0.0.1'
+        self.SERVER_HOST = '10.130.67.24'
         self.SERVER_PORT = 7979
 
         self.MY_IP = socket.gethostbyname(socket.gethostname())
@@ -29,11 +29,12 @@ class GameClient:
 
             print(f'[*] <Client> attempting to connect to {self.SERVER_HOST}:{self.SERVER_PORT}...')
             self.s.connect((self.SERVER_HOST, self.SERVER_PORT))
+            print(f'[+] Connection succesful to {self.SERVER_HOST}:{self.SERVER_PORT}!')
+
+
             
         except BaseException as e:
             self.exit(e)
-
-        print(f'[+] Connection succesful to {self.SERVER_HOST}:{self.SERVER_PORT}!')
 
         self.loop()
 
@@ -59,10 +60,7 @@ class GameClient:
 
         if comm[0] == '/':
 
-            if comm == '/confo':
-                print(f'[>] Network confirmation recieved! Connection stable.')
-
-            elif comm = '/gamestart':
+            if comm == '/gamestart':
                 print(f'[!] Kahoot Game from {det} about to start!')
     
 
@@ -103,6 +101,6 @@ class GameClient:
 
 #-------------------------------------------------------------------#
 
-g = GameClient()
+g = SocketClient()
 g.start()
 
