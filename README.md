@@ -6,9 +6,13 @@ A scuffed remake of Kahoot, by SHSB
 About the Project
 =================
 
+A Synergy Studios Project, headed by Tobiloba Kujore.
+
 This project is a remake of Kahoot in the popular programming language Python.
 The collaborators are from Y9 and Y10 of SHSB. It was started on September 9th, 2021.
 The project aims to be released in early - mid 2022.
+
+> Current initial alpha release (v1.1): March 2022
 
 
 Collaborators
@@ -17,18 +21,21 @@ Collaborators
 Coders
 ------
 
+> Write code for the project.
 - Tobiloba Kujore (main coder) - joined 09/11
-- Sam Booker (#signal dir coder) [@suchasaltylemon] - joined 09/11
+- Sam Booker (#signal wrapper coder) [@suchasaltylemon] - joined 14/11
 
 Question Makers
 ---------------
 
-- Daniel Eldridge (questions) - joined 09/11
+> Help make questions that will be in starter packs.
+- Daniel Eldridge (questions) - joined 15/11
 - Jack Learmouth (questions) - joined 16/11
 
 GUI Design and Music
 --------------------
 
+> Design assets for the project.
 - Jaden Francisco (GUI artist, music) - joined 22/11
 
 ---------------
@@ -40,7 +47,7 @@ Imports
 -------
 
 Currently, the project uses only a few Python libraries.
-The ones listed are (as of 27/11)
+The ones listed are (as of 17/12)
 
 - socket
 - tkinter
@@ -48,12 +55,13 @@ The ones listed are (as of 27/11)
 
 Packages
 --------
-Nothing yet.
 
-Notes
-=====
+Package releases are planned to be in .exe exectuables, so they can be ran anywhere.
+The first package relase will be in v1.1
+
+Notes and Issues
+================
 
 - [GUI] Client side set to be added in v1.1 (tkinter pending)
 - [SERVER] Add features when making a server (customisable)
-- [SERVER] Add types for messages when server and client communicate
 - [MUSIC] Kahoot OST pending (by Jaden Francisco)
