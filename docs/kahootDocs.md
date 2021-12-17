@@ -35,7 +35,11 @@ GUI
 TESTS
 -----
 
-- Empty for now.
+- v1.0.1 [Client] Started a non-signal ver. of KahootClient
+- v1.0.2 [Client] Small changes to classes.
+
+- v1.0.1 [Server] Started a non-signal ver. of KahootServer
+- v1.0.2 [Server] Added sim of lobby to class.
 
 -----
 
@@ -48,3 +52,4 @@ Implementation
 --------------
 
 - Should be packaged as an executable (research pending)
+- Music Files coming soon (kahootOST)
