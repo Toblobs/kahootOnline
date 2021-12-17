@@ -1,40 +1,15 @@
 ### Hosted on Github at @Toblobs
 ### A Synergy Studios Project
 
-version = '1.0.7_T.0.2'
+version = 'T.0.3'
 
 from threading import Thread
 import socket
 from time import sleep
 
-def print_special(sp = None):
+from kModules.kQuestions import *
+from kModules.printer import *
 
-    """Special Printing Class"""
-
-    if sp == None:
-        pass
-
-    #Borders
-    
-    elif sp == 'single-border':
-        print('-' * 30)
-        
-    elif sp == 'double-border':
-        print('_' * 30)
-        print('-' * 30)
-        print()
-
-    elif sp == 'equals-border':
-        print('=' * 30)
-
-    #Spaces
-
-    elif sp == 'double-space':
-        print()
-        print()
-
-    
-        
 class KahootGame:
     
     """A representation of a single Kahoot Game."""
@@ -42,15 +17,107 @@ class KahootGame:
     def __init__(self):
 
         self.server = SocketServer()
+        self.name = 'eu.kahoot.test.1'
 
-        self.st = Thread(target = self.server.start_server, daemon = True)
+        self.st = '%'
+        self.t = Thread(target = self.server.start_server, daemon = True)
 
+        self.QATIME = 10
+        self.questions = []
+        self.leaderboard = []
+
+        self.printer = Printer()
+
+    def load_questions(self):
+
+        """Loads in questions for the game."""
+
+        # Example code (will be replaced)
+
+        question1 = SimpleAnswerQuestion('What is the second-biggest continent?',  'Africa')
+        question2 = MultipleAnswerQuestion('How many degrees does a right angle have?',
+                                           '90', ['65', '85', '90', '105'])
+
+        self.questions.append(question1)
+        self.questions.append(question2)
+
+    def run_question(self, q):
+
+        """Prints out an appropriate question and
+           sends it to clients."""
+
+        if isinstance(q, SimpleAnswerQuestion):
+            
+            print(f'[?] Question {self.questions.index(q) + 1}: {q.question} | Answer: {q.correct}')
+            self.server.broadcast('all', f'/question{self.st}{q.question}')
+                
+        elif isinstance(q, MultipleAnswerQuestion):
+            
+            print(f'[?] Question {self.questions.index(q) + 1}: {q.question} | Choices: {q.answers} | Answer: {q.correct}')
+
+            con_answers = ''
+            
+            for _q in q.answers:
+
+                if con_answers != '':
+                    con_answers = con_answers + ', ' + _q
+                else:
+                    con_answers = con_answers + _q
+                    
+            self.server.broadcast('all', f'/question{self.st}{q.question};{con_answers}' )          
+        
     def start_game(self):
 
-        print_special('double-space')
+        """Starts and runs a game."""
+
+        self.printer.print_border('double-space')
         print('Starting a new game...')
-        print_special('single-border')
-        
+        self.printer.print_border('single-border')
+
+        self.server.broadcast('all', f'/gamestart{self.st}{self.name}')
+        self.server.state = 'Game'
+
+        #Main Game running loop
+        for q in self.questions:
+
+            self.server.question_queue = []
+
+            print()
+
+            self.run_question(q)                
+            print(f'[>] Question sent to clients!')
+            print()
+
+            time_left = self.QATIME
+            time_board = []
+            old_length = len(self.server.question_queue)
+
+            while time_left >= 0:
+
+                new_length = len(self.server.question_queue)
+                
+                if old_length < new_length:
+                    
+                    new_answer = self.server.question_queue[-1:]
+                    
+                    time_taken = round((self.QATIME - time_left), 2)
+                    time_board.append(time_taken)
+
+                old_length = new_length
+                sleep(0.01)
+                time_left = time_left - 0.01
+
+            print()
+            print(f'Client response times: {time_board}')
+            print(f'Client answers: {self.server.question_queue}')
+
+            for s in self.server.question_queue:
+                #Assign points to leaderboard
+                pass
+
+
+        self.end_game()
+            
 
     def lobby(self):
 
@@ -60,43 +127,74 @@ class KahootGame:
         self.server.state = 'Lobby'
 
         print('Waiting lobby time...')
-        print_special('single-border')
+        self.printer.print_border('single-border')
 
-        counter = 10
+        counter = 15
         list_length = len(self.server.client_sockets)
         
         while True:
             
             if len(self.server.client_sockets) >= (self.server.max_users - 5):
-                self.start_game()
+                break
                 
             elif counter == 0:
-                self.start_game()
+                break
 
-            elif (counter == 5) or (counter == 3) or (counter == 1):
-                print(f'Starting in {counter} second(s)...')
+            elif (counter == 10) or (counter == 5) or (counter == 3):
+                print(f'Starting in {counter} seconds...')
 
             if list_length != len(self.server.client_sockets):
                 counter = 10
                 list_length = len(self.server.client_sockets)
-                print('Lobby Timer Reset!')
+                print('[!] Lobby Timer reset as someone left/joined!')
+                print()
 
             counter = counter - 1
             sleep(1)
 
+        self.start_game()
+        
     def run(self):
 
         """The main running of the KahootGame class."""
 
         print('Booting...')
-        print_special('double-border')
-        
-        sleep(3)
-        self.st.start()
+        self.printer.print_border('double-border')
 
-        sleep(1)
+        # Boot
+
+        sleep(0.1)
+        self.load_questions()
+
+        sleep(0.1)
+        self.t.start()
+
+        # Lobby
+        
+        sleep(0.1)
         self.lobby()
 
+    def end_game(self):
+
+        """Ends the game."""
+
+        # Endgame stuff (wil be coded later)
+        self.server.state = 'After Game'
+        
+        self.printer.print_border('double-border')
+        print('[!] Game ended!')
+        print()
+        print('[*] Points leaderboard:')
+
+        self.server.broadcast('all', 'f/gameover{self.st}{self.name}')
+
+        self.printer.print_border('single-border')
+        print()
+        print('[!] Shutting down server...')
+        self.server.exit_server()
+        
+        print('[*] Closing application...')
+        quit()
 
 
 class SocketServer:
@@ -118,6 +216,7 @@ class SocketServer:
         self.format = 'UTF-8'
 
         self.client_sockets = set()
+        self.question_queue = []
 
         self.state = None
 
@@ -152,6 +251,15 @@ class SocketServer:
 
         cs.send(data.encode(self.format))
 
+    def broadcast(self, to, data):
+
+        """Broadcasts the data to every client in our list,"""
+
+        if to == 'all':
+            
+            for cs in self.client_sockets:
+                cs.send(data.encode(self.format))
+
     def intr_command(self, cs, ca, msg):
 
         """Handldes commands from the message defined
@@ -162,20 +270,32 @@ class SocketServer:
         comm = msg_list[0]
         det = msg_list[1]
 
-        print()
-        print(f'[>] Client {ca} sent comm:det {comm}:{det}')
+        #print()
+        #print(f'[>] Client {ca} sent comm:det {comm}:{det}')
 
         if comm[0] == '/':
 
-            #if comm == '/confo':
+            if comm == '/confo':
                 #print(f'[>] Client {ca} confirmation message received!')
                 #self.send(cs, f'/confo{self.st}confo_received')
-
-            if comm == '':
                 pass
+
+            elif comm == '/answer':
+                print(f'[>] Client {ca} sent answer: {det}')
+                self.question_queue.append([ca, det])
 
             else:
                 pass
+
+    def client_disconnected(self, cs, ca, e):
+
+        """Cleanly exits a connection with a client,
+           with an optional exception."""
+
+        print()
+        print(f'[!] Client {ca} disconnected: {e}')
+        self.client_sockets.remove(cs)
+        cs.close()
 
         
     def listen_for_client(self, cs, ca):
@@ -189,9 +309,8 @@ class SocketServer:
                 msg = cs.recv(1024).decode()
 
             except BaseException as e:
-
-                print()
-                print(f'[!] Client {ca} disconnected: {e}')
+                
+                self.client_disconnected(cs, ca, e)
                 break
 
             else:
@@ -217,6 +336,12 @@ class SocketServer:
                 t = Thread(target = self.listen_for_client, args = (client_socket, client_address),
                            daemon = True)
                 t.start()
+
+            elif self.state == 'Game':
+                pass
+
+            elif self.state == 'After Game':
+                pass
 
             else:
                 pass
