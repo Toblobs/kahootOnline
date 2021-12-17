@@ -24,8 +24,9 @@ CLIENT
 MODULES
 -------
 
-- v1.0.1 [kQuestions] Code from kahootServer.py moved to this file.
-
+- [kQuestions] Code from kahootServer.py moved to this file.
+- [kahootTk] Wrapper of tkinter for the kahootGUI.py file
+- [printer] Special printing code, soon to be moved to misc. folder
 GUI
 ---
 
