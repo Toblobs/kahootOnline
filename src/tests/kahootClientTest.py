@@ -1,7 +1,7 @@
 ### Hosted on Github at @Toblobs
 ### A Synergy Studios Project
 
-version = 'T.0.3'
+version = 'T.0.4'
 
 from threading import Thread
 import socket
@@ -48,6 +48,7 @@ class SocketClient:
         print()
         self.s.close()
         print(f'[!] <Client> shutdown with error: {error}')
+        quit()
 
     def send(self, data):
 
@@ -58,7 +59,12 @@ class SocketClient:
     def get_answer(self, det):
 
         if ';' not in det:
+            
             answer = input(f'[?] Text Question: {det}: ')
+            
+            #while (';' in answer) or ('/' in answer):
+                #print('Invalid input! You cannot use special characters ; or /')
+                #answer = input(f'[?] Text Question: {question} | Choices: {choices}: ')
 
         else:
 
@@ -67,8 +73,23 @@ class SocketClient:
             
             answer = input(f'[?] Choice Question: {question} | Choices: {choices}: ')
             
-        if answer:
-            self.send(f'/answer{self.st}{answer}')
+            #while (';' in answer) or ('/' in answer):
+                #print('Invalid input! You cannot use special characters ; or /')
+                #answer = input(f'[?] Choice Question: {question} | Choices: {choices}: ')
+
+        self.send(f'/answer{self.st}{answer}')
+        print('[>] Answer sent succesfully!')
+
+    def print_lb_info(self, det):
+
+        """Prints out the position of the player."""
+
+        print()
+
+        position = det.split(';')[0]
+        points = det.split(';')[1]
+        
+        print(f'You are in {position} place, with {points} points.')
         
     def intr_command(self, msg):
 
@@ -92,7 +113,10 @@ class SocketClient:
                 self.get_answer(det)
                 
             elif comm == '/gameover':
-                self.end_game()
+                self.end_game(det)
+
+            elif comm == '/lb-info':
+                self.print_lb_info(det)
     
 
     def listen_for_messages(self):
@@ -136,7 +160,7 @@ class SocketClient:
             else:
                 pass
 
-    def end_game(self):
+    def end_game(self, det):
 
         """Ends the game and shows useful data."""
 
