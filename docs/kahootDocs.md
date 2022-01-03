@@ -38,9 +38,11 @@ TESTS
 
 - v1.0.1 [Client] Started a non-signal ver. of KahootClient
 - v1.0.2 [Client] Small changes to classes.
-
+- v1.0.3 - v1.0.5 [Client] Fixed some printing issues
+- 
 - v1.0.1 [Server] Started a non-signal ver. of KahootServer
 - v1.0.2 [Server] Added sim of lobby to class.
+- v1.0.3 - v1.0.5 [Server] Fully simulated a game with points and leaderboard
 
 -----
 
