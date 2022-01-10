@@ -30,13 +30,12 @@ Question Makers
 
 > Help make questions that will be in starter packs.
 - Daniel Eldridge (questions) - joined 15/11
-- Jack Learmouth (questions) - joined 16/11
 
 GUI Design and Music
 --------------------
 
 > Design assets for the project.
-- Jaden Francisco (GUI artist, music) - joined 22/11
+- Jaden Francisco (GUI music) - joined 22/11
 
 ---------------
 
@@ -47,11 +46,13 @@ Imports
 -------
 
 Currently, the project uses only a few Python libraries.
-The ones listed are (as of 17/12)
+The ones listed are (as of 10/01)
 
 - socket
 - tkinter
 - time
+- playsound
+- threading
 
 Packages
 --------
