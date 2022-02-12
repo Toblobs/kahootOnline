@@ -1,9 +1,10 @@
 ### Hosted on Github at @Toblobs
 ### A Synergy Studios Project
 
-version = 'T.0.5'
+version = 'T.0.5.1'
 
 from threading import Thread
+from time import sleep
 from datetime import datetime
 
 import socket
@@ -12,7 +13,7 @@ from kModules.printer import *
 
 #from kModules.net.client import SocketClient
 from kModules.net.packet import Packet
-
+        
 class SocketClient:
 
     """The client, which accepts questions and
@@ -37,7 +38,7 @@ class SocketClient:
 
         self.answered_question = False
 
-    def start(self):
+    def start_client(self):
 
         """Starts the connection to the host."""
 
@@ -48,6 +49,14 @@ class SocketClient:
         
         while name == '':
             name = input('Please input a name: ')
+
+        print()
+
+        self.SERVER_HOST = input('Please enter an IP: ')
+
+        while name == '':
+            self.SERVER_HOST = input('Please enter an IP: ')
+
             
         self.printer.print_border('single-border')
         print()
@@ -214,5 +223,4 @@ class SocketClient:
 #-------------------------------------------------------------------#
 
 g = SocketClient()
-g.start()
-
+g.start_client()

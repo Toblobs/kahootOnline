@@ -1,7 +1,7 @@
 ### Hosted on Github at @Toblobs
 ### A Synergy Studios Project
 
-version = 'T.0.5'
+version = 'T.0.5.1'
 
 from threading import Thread
 from time import sleep
@@ -35,32 +35,35 @@ class Leaderboard:
 
     def __init__(self):
         
-        self.leaderboard = {}
+        self.leaderboard = []
 
     def refresh_leaderboard(self):
 
         """Reorders and updates the leaderboard."""
         
-        sorted_values = sorted(self.leaderboard.values(), reverse = True)
-        sorted_dict ={}
-
-        for i in sorted_values:
-            for k in self.leaderboard.keys():
-                if self.leaderboard[k] == i:
-                    sorted_dict[k] = self.leaderboard[k]
-                    break
-                
-        self.leaderboard = sorted_dict
+        self.leaderboard = sorted(self.leaderboard, key = lambda tup: tup[1], reverse = True)
         
     def append(self, key, value, autosort = False):
 
         """Add a value to the leaderboard.
            If autosort is True, refreshes the leaderboard"""
 
-        self.leaderboard[key] = value
+        self.leaderboard.append((key, value))
 
         if autosort:
             self.refresh_leaderboard()
+
+    def add_points(self, key, value, autosort = False):
+
+        """Adds points to a key in the leaderboard.
+           If autosort is True, refreshes the leaderboard"""
+
+        if self.return_position(key):
+
+            old_value = self.return_points(key)
+            new_value = old_value + value
+            
+            self.leaderboard[self.return_position(key)] = (key, new_value)
 
     def print_leaderboard(self, q = None):
 
@@ -69,20 +72,31 @@ class Leaderboard:
         print()
 
         if q:
+            
             print(f'Leaderboard as of Question {q}:')
 
         for s in self.leaderboard:
 
-            k = list(self.leaderboard.keys())
+            print(f'{self.leaderboard.index(s) + 1}: {s[0]} | Points: {s[1]}')
 
-            print(f'{k.index(s) + 1}: {s} | Points: {self.leaderboard[s]}')
+    def return_position(self, name):
 
-    def return_position(self, addr):
+        """Returns a position based on the key (name)"""
 
-        """Returns a position based on the key (addr)"""
+        for s in self.leaderboard:
 
-        return list(self.leaderboard).index(addr)
+            if s[0] == name:
+                return self.leaderboard.index(s)
 
+    def return_points(self, name):
+
+        """Returns a position based on the name."""
+
+        for s in self.leaderboard:
+
+            if s[0] == name:
+                return s[1]
+            
 
 class KahootGame:
 
@@ -102,14 +116,14 @@ class KahootGame:
         self.t = Thread(target = self.server.start_server, daemon = True)
         #self.t1 = Thread(targer = self.input_reader.start, daemon = True)
 
-        self.qa_time = 15
+        self.qa_time = 20
 
         self.max_points = 1000
 
         self.questions = []
         self.question_pack = [starterPack2, 'all']
 
-        self.lobby_wait = 15
+        self.lobby_wait = 20
 
     def load_questions(self):
 
@@ -189,17 +203,19 @@ class KahootGame:
         #print(f'[+] Client {addr} got {s_points} points!')
         self.server.send(self.server.return_cs(addr), Packet('/got_points', f'{s_points}'))
 
-        if name not in self.leaderboard.leaderboard:
+        if self.leaderboard.return_position(name) == None:
             self.leaderboard.append(name, s_points)
 
         else:
-            self.leaderboard.leaderboard[name] += s_points
+            self.leaderboard.add_points(name, s_points)
             
 
         self.server.send(self.server.return_cs(addr), Packet('/correct', f'{correct}'))
 
         position = self.leaderboard.return_position(name) + 1
-        points = self.leaderboard.leaderboard[name]
+        points = self.leaderboard.return_points(name)
+
+        sleep(0.2)
 
         self.server.send(self.server.return_cs(addr), Packet('/lb_info', f'{position};{points}'))
 
@@ -294,10 +310,10 @@ class KahootGame:
                 print(f'Starting in {counter} seconds...')
 
             if list_length != len(self.server.client_sockets):
-                print('[!] Lobby Timer reset as someone left/joined!')
+                print('[!] Lobby Timer interrupted as someone left/joined!')
                 print()
 
-                counter = self.lobby_wait
+                counter += 5
                 list_length = len(self.server.client_sockets)
 
             counter = counter - 1
