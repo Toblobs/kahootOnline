@@ -1,5 +1,5 @@
 # kahootOnline
-A scuffed remake of Kahoot, by SHSB
+The fanmade scuffed remake of Kahoot, by SHSB
 
 ------------------------------
 
@@ -12,8 +12,8 @@ This project is a remake of Kahoot in the popular programming language Python.
 The collaborators are from Y9 and Y10 of SHSB. It was started on September 9th, 2021.
 The project aims to be released in early - mid 2022.
 
-> Current initial alpha release (v1.1): March 2022
-
+> Current initial alpha release (v1.1): May/June 2022
+> Current initial first website docs: May 2022
 
 Collaborators
 =============
@@ -30,6 +30,7 @@ Question Makers
 
 > Help make questions that will be in starter packs.
 - Daniel Eldridge (questions) - joined 15/11
+- Adam Burrows (questions) - joined 11/02
 
 GUI Design and Music
 --------------------
@@ -51,7 +52,7 @@ The ones listed are (as of 10/01)
 - socket
 - tkinter
 - time
-- playsound
+- playsound (not in python native family)
 - threading
 
 Packages
@@ -65,4 +66,4 @@ Notes and Issues
 
 - [GUI] Client side set to be added in v1.1 (tkinter pending)
 - [SERVER] Add features when making a server (customisable)
-- [MUSIC] Kahoot OST pending (by Jaden Francisco)
+- [MUSIC] Kahoot OST Opening Track 4 pending (by Jaden Francisco)
