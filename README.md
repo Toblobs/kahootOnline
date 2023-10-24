@@ -5,13 +5,6 @@ The fanmade scuffed remake of Kahoot, by SHSB
 
 About the Project
 =================
-
-A Synergy Studios Project, headed by Tobiloba Kujore.
-
-This project is a remake of Kahoot in the popular programming language Python.
-The collaborators are from Y9 and Y10 of SHSB. It was started on September 9th, 2021.
-The project aims to be released in early - mid 2022.
-
 > Current initial alpha release (v1.1): May/June 2022
 
 > Current initial first website docs: May 2022
