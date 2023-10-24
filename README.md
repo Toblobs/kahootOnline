@@ -1,5 +1,5 @@
 # kahootOnline
-The fanmade scuffed remake of Kahoot, by SHSB
+The fanmade scuffed remake of Kahoot.
 
 ------------------------------
 
